@@ -16,8 +16,8 @@ Including another URLconf
 
 from django.conf.urls import url
 from django.contrib import admin
-from lib.records.views import redirectToYellowAntAuthenticationPage, yellowantapi, yellowantRedirecturl, webhook
-from lib.web import urls as web_urls
+from ..lib.records.views import redirectToYellowAntAuthenticationPage, yellowantapi, yellowantRedirecturl, webhook
+from ..lib.web import urls as web_urls
 from django.urls import path, include
 
 urlpatterns = [

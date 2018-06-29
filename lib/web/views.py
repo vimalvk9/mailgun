@@ -13,7 +13,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from yellowant import YellowAnt
-from records.models import YellowUserToken, MailGunUserToken
+from ..records.models import YellowUserToken, MailGunUserToken
 from mailgunapp import settings
 
 
@@ -26,19 +26,20 @@ def index(request, path):
     """
 
     context = {
-        "user_integrations": []
-        }
-
+                "base_href": settings.BASE_HREF,
+                "application_id": settings.YA_APP_ID,
+                "user_integrations": []
+             }
     # Check if user is authenticated otherwise redirect user to login page
 
     if request.user.is_authenticated:
         user_integrations = YellowUserToken.objects.filter(user=request.user.id)
         print(user_integrations)
-        for user_integration in user_integrations:
-            context["user_integrations"].append(user_integration)
-        return render(request, "home.html", context)
-    else:
-        return HttpResponse("Please login !")
+        # for user_integration in user_integrations:
+        #     context["user_integrations"].append(user_integration)
+    return render(request, "home.html", context)
+    # else:
+    #     return HttpResponse("Please login !")
 
 def user_list_view(request):
     """

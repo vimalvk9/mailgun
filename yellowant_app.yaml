@@ -1,0 +1,208 @@
+api_url: https://160830fa.ngrok.io/yellowant-api/
+creator_email: admin@yellowant.com
+documentation_url: https://www.yellowant.com
+functions:
+  api_key:
+    function_type: 1
+    input_args:
+      api:
+        arg_type: 14
+        description: Private API key value
+        example: 234dsdfvfdsdfvfdsdfvfdsdf123
+        name: api
+        required: 1
+    invoke_name: api_key
+    is_active: 1
+    max_retries: 0
+    name: Update API key
+    output_keys: {}
+    privacy_mode: 0
+    rate_limited: 0
+    short_description: Update API key in case regenerated for your registered domain
+      in your mailgun account
+    user_rate_limit: 0.0
+  get_bounces:
+    function_type: 1
+    input_args: {}
+    invoke_name: get_bounces
+    is_active: 1
+    max_retries: 0
+    name: Get all bouces
+    output_keys: {}
+    privacy_mode: 0
+    rate_limited: 0
+    short_description: List of all bounces for your registered domain in your mailgun
+      account
+    user_rate_limit: 0.0
+  get_complaints:
+    function_type: 1
+    input_args: {}
+    invoke_name: get_complaints
+    is_active: 1
+    max_retries: 0
+    name: Get all complaints
+    output_keys: {}
+    privacy_mode: 0
+    rate_limited: 0
+    short_description: Get all complaints for your registered domain in your mailgun
+      account
+    user_rate_limit: 0.0
+  get_credentials:
+    function_type: 1
+    input_args: {}
+    invoke_name: get_credentials
+    is_active: 1
+    max_retries: 0
+    name: Get SMTP credentials
+    output_keys: {}
+    privacy_mode: 0
+    rate_limited: 0
+    short_description: Get all SMTP credentials for your registered domain in your
+      mailgun account
+    user_rate_limit: 0.0
+  get_domain:
+    function_type: 1
+    input_args: {}
+    invoke_name: get_domain
+    is_active: 1
+    max_retries: 0
+    name: Get domain details
+    output_keys: {}
+    privacy_mode: 0
+    rate_limited: 0
+    short_description: Get information about the registerd domain in your mailgun
+      account
+    user_rate_limit: 0.0
+  get_domain_tracking:
+    function_type: 1
+    input_args: {}
+    invoke_name: get_domain_tracking
+    is_active: 1
+    max_retries: 0
+    name: Get tracking details for the domain
+    output_keys: {}
+    privacy_mode: 0
+    rate_limited: 0
+    short_description: Get tracking details for your registered domain in your mailgun
+      account
+    user_rate_limit: 0.0
+  get_domains:
+    function_type: 1
+    input_args: {}
+    invoke_name: get_domains
+    is_active: 1
+    max_retries: 0
+    name: Get list of domains under your account
+    output_keys: {}
+    privacy_mode: 0
+    rate_limited: 0
+    short_description: Get all your domains in your mailgun account
+    user_rate_limit: 0.0
+  get_ips:
+    function_type: 1
+    input_args: {}
+    invoke_name: get_ips
+    is_active: 1
+    max_retries: 0
+    name: Get list of IPs assigned to your registered domain
+    output_keys: {}
+    privacy_mode: 0
+    rate_limited: 0
+    short_description: Get all IPs for your registered domain in your mailgun account
+    user_rate_limit: 0.0
+  get_stats:
+    function_type: 1
+    input_args: {}
+    invoke_name: get_stats
+    is_active: 1
+    max_retries: 0
+    name: Get stats for your events
+    output_keys: {}
+    privacy_mode: 0
+    rate_limited: 0
+    short_description: Get stats for ‘accepted’, ‘delivered’, and ‘failed’ events
+      for the past month
+    user_rate_limit: 0.0
+  get_unsubscribes:
+    function_type: 1
+    input_args: {}
+    invoke_name: get_unsubscribes
+    is_active: 1
+    max_retries: 0
+    name: Get list of all unsubscribes
+    output_keys: {}
+    privacy_mode: 0
+    rate_limited: 0
+    short_description: Get all unsubscribe details for your registered domain in your
+      mailgun account
+    user_rate_limit: 0.0
+  notify_delivered:
+    function_type: 2
+    input_args: {}
+    invoke_name: notify_delivered
+    is_active: 1
+    max_retries: 0
+    name: Get notifications for delivered mails
+    output_keys: {}
+    privacy_mode: 0
+    rate_limited: 0
+    short_description: Get webhooks on delivery of your emails
+    user_rate_limit: 0.0
+  notify_unsubscribe:
+    function_type: 2
+    input_args: {}
+    invoke_name: notify_unsubscribe
+    is_active: 1
+    max_retries: 0
+    name: Get notifications for unsubscribes
+    output_keys: {}
+    privacy_mode: 0
+    rate_limited: 0
+    short_description: Get webhooks for unsubscribe details for your registered domain
+      in your mailgun account
+    user_rate_limit: 0.0
+  send_mail:
+    function_type: 1
+    input_args:
+      subject:
+        arg_type: 14
+        description: Subject for the email
+        example: Hello
+        name: subject
+        required: 1
+      text:
+        arg_type: 14
+        description: Message to be sent
+        example: Testing some Mailgun awesomness!
+        name: text
+        required: 1
+      to:
+        arg_type: 14
+        description: Receiver's mail id
+        example: sample@gmail.comj
+        name: to
+        required: 1
+    invoke_name: send_mail
+    is_active: 1
+    max_retries: 0
+    name: Send a mail
+    output_keys: {}
+    privacy_mode: 0
+    rate_limited: 0
+    short_description: Send a simple mail using mailgun
+    user_rate_limit: 0.0
+icon_url: http://www.stickpng.com/assets/images/58480ed8cef1014c0b5e492d.png
+install_page_url: https://statuspage-2.herokuapp.com/
+invoke_name: mailgun
+is_active: 1
+is_production_or_sandbox: 1
+long_description: Transactional Email API Service For Developers
+name: Mailgun
+privacy_policy_url: https://statuspage-2.herokuapp.com/privacy
+rate_limit: 0.0
+rate_limited: 0
+redirect_uris: https://160830fa.ngrok.io/yellowantredirecturl/
+short_description: Transactional Email API Service For Developers
+user_rate_limit: 0.0
+visibility_scope: 1
+website: https://statuspage-2.herokuapp.com/

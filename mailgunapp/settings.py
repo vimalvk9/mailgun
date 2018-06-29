@@ -14,41 +14,71 @@ import os
 import json
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+
+data = open('yellowant_app_credentials.json').read()
+data_json = json.loads(data)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-# BASE_HREF = "/"
-BASE_URL = "https://a9813042.ngrok.io"
+
+app_name = os.environ.get("HEROKU_APP_NAME")
+BASE_URL = "https://{}.herokuapp.com".format(app_name)
+SITE_PROTOCOL = "http://"
+BASE_HREF = "/"
+
+
+DEV_ENV = os.environ.get('ENV', 'DEV')
+print(DEV_ENV)
+if DEV_ENV=="DEV":
+    BASE_URL = "https://160830fa.ngrok.io"
+    SITE_DOMAIN_URL = "ngrok.io"
+elif DEV_ENV=="HEROKU":
+    BASE_URL = "https://{}.herokuapp.com/".format(app_name)
+    app_name = os.environ.get("HEROKU_APP_NAME")
+    SITE_DOMAIN_URL = "herokuapp.com"
 
 
 
-# ### YellowAnt specific settings ###
-
-# URL to obtain oauth2 access for a YA user
 YELLOWANT_OAUTH_URL = "https://www.yellowant.com/api/oauth2/authorize/"
+YA_APP_ID = str(data_json['application_id'])
 
-# URL to receive oauth2 codes from YA for user authentication.
-# As a developer, you need to provide this URL in the YA
-# developer console so that YA knows exactly where to send the oauth2 codes.
-YELLOWANT_REDIRECT_URL = BASE_URL + "/yellowantredirecturl/"
-
-# Numerical ID generated when you register your application through
-#  the YA developer console
-YA_APP_ID = "1936"
-
-# Client ID generated from the YA developer console.
-# Required to identify requests from this application to YA
-YELLOWANT_CLIENT_ID = "xuPWZtkcU4ll820vGbg1k5XplJn1ci7FbhmKBWRK"
-
-# Client secret generated from the YA developer console.
-# Required to identify requests from this application to YA
-YELLOWANT_CLIENT_SECRET = "QC70CwFr77lwo0tb0MoyVmEK6cOWlTE1a0Q24BAAITmfI9YFAUBOHLBkIAQxz7okWAQduiEMEr4EPHHDW48R3pba8SjLLWcCjRpCPKXvBXDT736HEyGGiavuukQ3BddP"
-
-# Verification token generated from the YA developer console.
-# This application can verify requests from YA as they will
-# carry the verification token
-YELLOWANT_VERIFICATION_TOKEN = "pc0LjSDCkdKw5EHgX31l1gwfbJj6yT5U407yWrdD2c8RnAPwpEg8oaxAknXDzVhtJpkcdYCTEikaEtjGiR3uuaudgmY3EsmDOqjKdeLt4qLMNqcbnqAiWYTPNLuuzWcr"
+YELLOWANT_CLIENT_ID = str(data_json['client_id'])
+YELLOWANT_CLIENT_SECRET = str(data_json['client_secret'])
+YELLOWANT_VERIFICATION_TOKEN = str(data_json['verification_token'])
+YELLOWANT_REDIRECT_URL = BASE_URL + "yellowantredirecturl/"
 
 
-# ### END YellowAnt specific settings ###
+
+
+
+
+# # ### YellowAnt specific settings ###
+#
+# # URL to obtain oauth2 access for a YA user
+# YELLOWANT_OAUTH_URL = "https://www.yellowant.com/api/oauth2/authorize/"
+#
+# # URL to receive oauth2 codes from YA for user authentication.
+# # As a developer, you need to provide this URL in the YA
+# # developer console so that YA knows exactly where to send the oauth2 codes.
+# YELLOWANT_REDIRECT_URL = BASE_URL + "/yellowantredirecturl/"
+#
+# # Numerical ID generated when you register your application through
+# #  the YA developer console
+# YA_APP_ID = "1936"
+#
+# # Client ID generated from the YA developer console.
+# # Required to identify requests from this application to YA
+# YELLOWANT_CLIENT_ID = "xuPWZtkcU4ll820vGbg1k5XplJn1ci7FbhmKBWRK"
+#
+# # Client secret generated from the YA developer console.
+# # Required to identify requests from this application to YA
+# YELLOWANT_CLIENT_SECRET = "QC70CwFr77lwo0tb0MoyVmEK6cOWlTE1a0Q24BAAITmfI9YFAUBOHLBkIAQxz7okWAQduiEMEr4EPHHDW48R3pba8SjLLWcCjRpCPKXvBXDT736HEyGGiavuukQ3BddP"
+#
+# # Verification token generated from the YA developer console.
+# # This application can verify requests from YA as they will
+# # carry the verification token
+# YELLOWANT_VERIFICATION_TOKEN = "pc0LjSDCkdKw5EHgX31l1gwfbJj6yT5U407yWrdD2c8RnAPwpEg8oaxAknXDzVhtJpkcdYCTEikaEtjGiR3uuaudgmY3EsmDOqjKdeLt4qLMNqcbnqAiWYTPNLuuzWcr"
+#
+#
+# # ### END YellowAnt specific settings ###
 
 
 
@@ -61,7 +91,7 @@ SECRET_KEY = '_gk(yvhtqk(jiq!yl)1*w_u2p3o5w0uc@h8mfs@_*1e)36k6z+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*','{}.herokuapp.com'.format(app_name)]
 
 
 # Application definition
@@ -73,12 +103,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'records',
-    'web',
+    'lib.records',
+    'lib.web',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -123,6 +154,13 @@ DATABASES = {
 }
 
 
+
+if DEV_ENV=="HEROKU":
+    import dj_database_url
+    db_from_env = dj_database_url.config()
+    DATABASES['default'].update(db_from_env)
+    DATABASES['default']['CONN_MAX_AGE'] = 500
+
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
@@ -160,3 +198,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
